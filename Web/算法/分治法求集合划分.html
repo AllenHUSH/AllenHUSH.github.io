@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>分治法求集合划分 | Allen&#39;s Blog</title>
+    <meta name="description" content="">
+    <link rel="icon" href="/favicon.ico">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <link rel="apple-touch-icon" href="/icons/icon-144x144.png">
+  <link rel="mask-icon" href="/icons/icon.svg" color="#3eaf7c">
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#000000">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+    
+    <link rel="preload" href="/assets/css/0.styles.cb01ff88.css" as="style"><link rel="preload" href="/assets/js/app.ec38c9f2.js" as="script"><link rel="preload" href="/assets/js/2.d0fa586e.js" as="script"><link rel="preload" href="/assets/js/45.8d6fee0f.js" as="script"><link rel="prefetch" href="/assets/js/10.70461273.js"><link rel="prefetch" href="/assets/js/11.70399b85.js"><link rel="prefetch" href="/assets/js/12.fcb69d52.js"><link rel="prefetch" href="/assets/js/13.f6f39a46.js"><link rel="prefetch" href="/assets/js/14.ab401308.js"><link rel="prefetch" href="/assets/js/15.8947625c.js"><link rel="prefetch" href="/assets/js/16.279e3263.js"><link rel="prefetch" href="/assets/js/17.969b11f9.js"><link rel="prefetch" href="/assets/js/18.14aac10e.js"><link rel="prefetch" href="/assets/js/19.3aa98401.js"><link rel="prefetch" href="/assets/js/20.4b98d070.js"><link rel="prefetch" href="/assets/js/21.a42ae304.js"><link rel="prefetch" href="/assets/js/22.c515337b.js"><link rel="prefetch" href="/assets/js/23.4ce732a9.js"><link rel="prefetch" href="/assets/js/24.30057529.js"><link rel="prefetch" href="/assets/js/25.6a0b3eca.js"><link rel="prefetch" href="/assets/js/26.3ead4467.js"><link rel="prefetch" href="/assets/js/27.0170e270.js"><link rel="prefetch" href="/assets/js/28.63e56b9b.js"><link rel="prefetch" href="/assets/js/29.793d5db8.js"><link rel="prefetch" href="/assets/js/3.1e3dc56e.js"><link rel="prefetch" href="/assets/js/30.12e67cc8.js"><link rel="prefetch" href="/assets/js/31.eda1d3c5.js"><link rel="prefetch" href="/assets/js/32.d8dd1097.js"><link rel="prefetch" href="/assets/js/33.dcfb01ff.js"><link rel="prefetch" href="/assets/js/34.a5da1922.js"><link rel="prefetch" href="/assets/js/35.9a3bffdb.js"><link rel="prefetch" href="/assets/js/36.01dd0de0.js"><link rel="prefetch" href="/assets/js/37.643033a6.js"><link rel="prefetch" href="/assets/js/38.5401f7da.js"><link rel="prefetch" href="/assets/js/39.c406d462.js"><link rel="prefetch" href="/assets/js/4.ffa5dc86.js"><link rel="prefetch" href="/assets/js/40.28abc696.js"><link rel="prefetch" href="/assets/js/41.ffa9ef8c.js"><link rel="prefetch" href="/assets/js/42.96495a3d.js"><link rel="prefetch" href="/assets/js/43.7d8756cb.js"><link rel="prefetch" href="/assets/js/44.6671a9a0.js"><link rel="prefetch" href="/assets/js/46.d5772ac7.js"><link rel="prefetch" href="/assets/js/47.4f09336b.js"><link rel="prefetch" href="/assets/js/5.5fa13e52.js"><link rel="prefetch" href="/assets/js/6.b7ad500e.js"><link rel="prefetch" href="/assets/js/7.967185c5.js"><link rel="prefetch" href="/assets/js/8.de1fd8b8.js"><link rel="prefetch" href="/assets/js/9.62906c02.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.cb01ff88.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Allen's Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/Default/" class="nav-link">Default</a></div><div class="nav-item"><a href="/Tips/" class="nav-link">Tips</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Web" class="dropdown-title"><span class="title">Web</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Web/前端/HTML/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/CSS/" class="nav-link">CSS</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/Js/" class="nav-link">JS</a></li><li class="dropdown-item"><!----> <a href="/Web/算法/" class="nav-link">Algorithms</a></li><li class="dropdown-item"><!----> <a href="/Web/Node/" class="nav-link">Node</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/Default/" class="nav-link">Default</a></div><div class="nav-item"><a href="/Tips/" class="nav-link">Tips</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Web" class="dropdown-title"><span class="title">Web</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Web/前端/HTML/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/CSS/" class="nav-link">CSS</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/Js/" class="nav-link">JS</a></li><li class="dropdown-item"><!----> <a href="/Web/算法/" class="nav-link">Algorithms</a></li><li class="dropdown-item"><!----> <a href="/Web/Node/" class="nav-link">Node</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/Web/%E7%AE%97%E6%B3%95/" class="sidebar-link">算法</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>经典</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/Web/算法/动态规划求矩阵最小路径.html" class="sidebar-link">动态规划求矩阵最小路径</a></li><li><a href="/Web/算法/分治法求伪币.html" class="sidebar-link">分治法求伪币</a></li><li><a href="/Web/算法/EditDistanceProbrlem字符串最少字符操作次数.html" class="sidebar-link">EditDistanceProbrlem字符串最少字符操作次数</a></li><li><a href="/Web/算法/分治法求集合划分.html" class="active sidebar-link">分治法求集合划分</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Web/算法/分治法求集合划分.html#问题描述" class="sidebar-link">问题描述</a></li><li class="sidebar-sub-header"><a href="/Web/算法/分治法求集合划分.html#重点" class="sidebar-link">重点</a></li><li class="sidebar-sub-header"><a href="/Web/算法/分治法求集合划分.html#总结" class="sidebar-link">总结</a></li><li class="sidebar-sub-header"><a href="/Web/算法/分治法求集合划分.html#ps" class="sidebar-link">PS</a></li></ul></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>LeetCode</span> <!----></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="分治法求集合划分"><a href="#分治法求集合划分" class="header-anchor">#</a> 分治法求集合划分</h1> <h2 id="问题描述"><a href="#问题描述" class="header-anchor">#</a> 问题描述</h2> <p>F(n,m)表示把n个元素的集合分为m个子集，有多少种分法？</p> <h2 id="重点"><a href="#重点" class="header-anchor">#</a> 重点</h2> <p>理解一下<code>return count(ln - 1, lm - 1) + lm * count(ln - 1, lm)</code></p> <p>n个元素的集合可以划为F（n,m）个不同的由m个非空子集组成的集合。</p> <p>考虑3个元素的集合，可划分为：</p> <div><ol><li><p>1个子集的集合：{ {1，2，3} }</p></li> <li><p>2个子集的集合：{{1，2} ，{3}}  ，  {{1，3}，{2}}  ，  {{2，3}，{1}}</p></li> <li><p>3个子集的集合：{{1}，{2}，{3}}</p></li></ol> <p>所以 F（3，1）=1
+　　 F（3，2）=3
+　　 F（3，3）=1</p> <p>如果要求F（4，2）该怎么办呢？</p> <p>A.往①里添加一个元素 {4} ，得到{{1，2，3}，{4}}</p> <p>B.往②里的任意一个子集添一个4，得到</p> <p>{{1，2，4}，{3}}  ，  {{1，2}，{3，4}}</p> <p>{{1，3，4}，{2}}  ，  {{1，3}，{2，4}}</p> <p>{{2，3，4}，{1}}  ，  {{2，3}，{1，4}}</p> <p>所以F（4，2） = F（3，1）+2*F（3，2） = 7</p> <p>以此推广得，F（n，m） =  F （n-1，m-1）+ m * F（n-1，m）</p></div><p><a href="https://www.cnblogs.com/chihaoyuIsnotHere/p/10129475.html" target="_blank" rel="noopener noreferrer">参考文档<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>
+代码实现</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * 分治法
+ * n个元素m个非空子集
+ * 可以组成多少种集合
+ * 即F(n,m)表示把n个元素的集合分为m个子集
+ * 有多少种分法
+ * 
+ * @author AllenHUSH
+ */</span>
+
+<span class="token comment">/**
+ * 声明全局变量
+ * 开始
+ */</span>
+<span class="token keyword">const</span> n <span class="token operator">=</span> <span class="token number">4</span>       <span class="token comment">// 全集包含n个元素</span>
+<span class="token keyword">const</span> m <span class="token operator">=</span> <span class="token number">2</span>       <span class="token comment">// m个非空子集</span>
+
+<span class="token comment">/**
+ * 计算函数
+ * 开始
+ */</span>
+<span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token punctuation">(</span>ln<span class="token punctuation">,</span> lm<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>lm <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">//即每个集合仅包含1个元素，n个元素分成n个集合，共1种组合方式</span>
+        <span class="token keyword">return</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>ln <span class="token operator">==</span> lm<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">//即每个集合包含n个元素，n个元素分成1个集合，共1种组合方式</span>
+            <span class="token keyword">return</span> <span class="token number">1</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token comment">//核心语句</span>
+            <span class="token keyword">return</span> <span class="token function">count</span><span class="token punctuation">(</span>ln <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> lm <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> lm <span class="token operator">*</span> <span class="token function">count</span><span class="token punctuation">(</span>ln <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> lm<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * 主函数入口
+ * 开始`
+ */</span>
+<span class="token keyword">let</span> main <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token punctuation">{</span>
+        <span class="token keyword">let</span> ans <span class="token operator">=</span> <span class="token function">count</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> m<span class="token punctuation">)</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;存在 &quot;</span> <span class="token operator">+</span> ans <span class="token operator">+</span> <span class="token string">&quot; 种集合方式&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">/**
+ * 程序入口
+ * 执行main函数
+ */</span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>分治——分而治之</p> <h2 id="ps"><a href="#ps" class="header-anchor">#</a> PS</h2> <p>node的输入流还没研究明白
+rl.question总是不给我处理输入值
+或许是作用域问题
+待研究</p> <p>以上。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/Web/算法/EditDistanceProbrlem字符串最少字符操作次数.html" class="prev">EditDistanceProbrlem字符串最少字符操作次数</a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ec38c9f2.js" defer></script><script src="/assets/js/2.d0fa586e.js" defer></script><script src="/assets/js/45.8d6fee0f.js" defer></script>
+  </body>
+</html>

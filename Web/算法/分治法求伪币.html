@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>分治法求伪币 | Allen&#39;s Blog</title>
+    <meta name="description" content="">
+    <link rel="icon" href="/favicon.ico">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <link rel="apple-touch-icon" href="/icons/icon-144x144.png">
+  <link rel="mask-icon" href="/icons/icon.svg" color="#3eaf7c">
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#000000">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+    
+    <link rel="preload" href="/assets/css/0.styles.cb01ff88.css" as="style"><link rel="preload" href="/assets/js/app.ec38c9f2.js" as="script"><link rel="preload" href="/assets/js/2.d0fa586e.js" as="script"><link rel="preload" href="/assets/js/44.6671a9a0.js" as="script"><link rel="prefetch" href="/assets/js/10.70461273.js"><link rel="prefetch" href="/assets/js/11.70399b85.js"><link rel="prefetch" href="/assets/js/12.fcb69d52.js"><link rel="prefetch" href="/assets/js/13.f6f39a46.js"><link rel="prefetch" href="/assets/js/14.ab401308.js"><link rel="prefetch" href="/assets/js/15.8947625c.js"><link rel="prefetch" href="/assets/js/16.279e3263.js"><link rel="prefetch" href="/assets/js/17.969b11f9.js"><link rel="prefetch" href="/assets/js/18.14aac10e.js"><link rel="prefetch" href="/assets/js/19.3aa98401.js"><link rel="prefetch" href="/assets/js/20.4b98d070.js"><link rel="prefetch" href="/assets/js/21.a42ae304.js"><link rel="prefetch" href="/assets/js/22.c515337b.js"><link rel="prefetch" href="/assets/js/23.4ce732a9.js"><link rel="prefetch" href="/assets/js/24.30057529.js"><link rel="prefetch" href="/assets/js/25.6a0b3eca.js"><link rel="prefetch" href="/assets/js/26.3ead4467.js"><link rel="prefetch" href="/assets/js/27.0170e270.js"><link rel="prefetch" href="/assets/js/28.63e56b9b.js"><link rel="prefetch" href="/assets/js/29.793d5db8.js"><link rel="prefetch" href="/assets/js/3.1e3dc56e.js"><link rel="prefetch" href="/assets/js/30.12e67cc8.js"><link rel="prefetch" href="/assets/js/31.eda1d3c5.js"><link rel="prefetch" href="/assets/js/32.d8dd1097.js"><link rel="prefetch" href="/assets/js/33.dcfb01ff.js"><link rel="prefetch" href="/assets/js/34.a5da1922.js"><link rel="prefetch" href="/assets/js/35.9a3bffdb.js"><link rel="prefetch" href="/assets/js/36.01dd0de0.js"><link rel="prefetch" href="/assets/js/37.643033a6.js"><link rel="prefetch" href="/assets/js/38.5401f7da.js"><link rel="prefetch" href="/assets/js/39.c406d462.js"><link rel="prefetch" href="/assets/js/4.ffa5dc86.js"><link rel="prefetch" href="/assets/js/40.28abc696.js"><link rel="prefetch" href="/assets/js/41.ffa9ef8c.js"><link rel="prefetch" href="/assets/js/42.96495a3d.js"><link rel="prefetch" href="/assets/js/43.7d8756cb.js"><link rel="prefetch" href="/assets/js/45.8d6fee0f.js"><link rel="prefetch" href="/assets/js/46.d5772ac7.js"><link rel="prefetch" href="/assets/js/47.4f09336b.js"><link rel="prefetch" href="/assets/js/5.5fa13e52.js"><link rel="prefetch" href="/assets/js/6.b7ad500e.js"><link rel="prefetch" href="/assets/js/7.967185c5.js"><link rel="prefetch" href="/assets/js/8.de1fd8b8.js"><link rel="prefetch" href="/assets/js/9.62906c02.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.cb01ff88.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Allen's Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/Default/" class="nav-link">Default</a></div><div class="nav-item"><a href="/Tips/" class="nav-link">Tips</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Web" class="dropdown-title"><span class="title">Web</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Web/前端/HTML/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/CSS/" class="nav-link">CSS</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/Js/" class="nav-link">JS</a></li><li class="dropdown-item"><!----> <a href="/Web/算法/" class="nav-link">Algorithms</a></li><li class="dropdown-item"><!----> <a href="/Web/Node/" class="nav-link">Node</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/Default/" class="nav-link">Default</a></div><div class="nav-item"><a href="/Tips/" class="nav-link">Tips</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Web" class="dropdown-title"><span class="title">Web</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Web/前端/HTML/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/CSS/" class="nav-link">CSS</a></li><li class="dropdown-item"><!----> <a href="/Web/前端/Js/" class="nav-link">JS</a></li><li class="dropdown-item"><!----> <a href="/Web/算法/" class="nav-link">Algorithms</a></li><li class="dropdown-item"><!----> <a href="/Web/Node/" class="nav-link">Node</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/Web/%E7%AE%97%E6%B3%95/" class="sidebar-link">算法</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>经典</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/Web/算法/动态规划求矩阵最小路径.html" class="sidebar-link">动态规划求矩阵最小路径</a></li><li><a href="/Web/算法/分治法求伪币.html" class="active sidebar-link">分治法求伪币</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Web/算法/分治法求伪币.html#正题" class="sidebar-link">正题</a></li><li class="sidebar-sub-header"><a href="/Web/算法/分治法求伪币.html#待完善" class="sidebar-link">待完善</a></li><li class="sidebar-sub-header"><a href="/Web/算法/分治法求伪币.html#ps" class="sidebar-link">PS</a></li></ul></li><li><a href="/Web/算法/EditDistanceProbrlem字符串最少字符操作次数.html" class="sidebar-link">EditDistanceProbrlem字符串最少字符操作次数</a></li><li><a href="/Web/算法/分治法求集合划分.html" class="sidebar-link">分治法求集合划分</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>LeetCode</span> <!----></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="分治法求伪币"><a href="#分治法求伪币" class="header-anchor">#</a> 分治法求伪币</h1> <p>前几日练习Swift 在Xcode上一顿操作
+这几天要完成算法作业 想写C Xcode问我access
+这事我也不知道啊
+一气之下打开VSCode继续愉快地JavaScript</p> <h2 id="正题"><a href="#正题" class="header-anchor">#</a> 正题</h2> <p><strong>分治法入门题——求伪币(基础版)</strong></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * 声明全局变量
+ * 开始
+ */</span>
+<span class="token keyword">const</span> <span class="token constant">COIN_SIZE</span> <span class="token operator">=</span> <span class="token number">16</span>           <span class="token comment">//硬币数目</span>
+<span class="token keyword">const</span> <span class="token constant">COIN_WEIGHT</span> <span class="token operator">=</span> <span class="token number">10</span>         <span class="token comment">//硬币标准质量</span>
+<span class="token keyword">const</span> <span class="token constant">FAKE_WEIGHT</span> <span class="token operator">=</span> <span class="token number">9</span>          <span class="token comment">//伪币质量</span>
+<span class="token keyword">let</span> calcTimes <span class="token operator">=</span> <span class="token number">0</span>           <span class="token comment">//计算次数</span>
+<span class="token keyword">let</span> coinArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//初始化硬币质量数组</span>
+<span class="token keyword">let</span> findOrder               <span class="token comment">//计算得到的伪币位置</span>
+<span class="token comment">/**
+ * 程序入口
+ * 执行main函数
+ */</span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">/**
+ * 分治法寻找伪币
+ * 核心算法
+ * 开始
+ */</span>
+<span class="token keyword">function</span> <span class="token function">findFake</span><span class="token punctuation">(</span><span class="token parameter">coinArray<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> LeftWeight
+    <span class="token keyword">let</span> RightWeight
+    calcTimes<span class="token operator">++</span><span class="token comment">//每进行一次查找，计数器+1</span>
+    LeftWeight <span class="token operator">=</span> <span class="token function">Weight</span><span class="token punctuation">(</span>coinArray<span class="token punctuation">,</span> left<span class="token punctuation">,</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//左侧质量</span>
+    RightWeight <span class="token operator">=</span> <span class="token function">Weight</span><span class="token punctuation">(</span>coinArray<span class="token punctuation">,</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span> <span class="token comment">//右侧质量</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>LeftWeight <span class="token operator">&gt;</span> RightWeight<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//如果左侧质量大于右侧质量，说明伪币在右侧</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">==</span> right <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//如果仅剩下两枚硬币了，则就是右边那一枚</span>
+            findOrder <span class="token operator">=</span> right
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token comment">//不止两枚硬币的话，则在右侧再进行一次查找</span>
+            <span class="token function">findFake</span><span class="token punctuation">(</span>coinArray<span class="token punctuation">,</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>LeftWeight <span class="token operator">&lt;</span> RightWeight<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//如果左侧质量小于右侧质量，说明伪币在左侧</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">==</span> right <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//如果仅剩下两枚硬币了，则就是左边那一枚</span>
+            findOrder <span class="token operator">=</span> left
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token comment">//不止两枚硬币的话，则在左侧再进行一次查找</span>
+            <span class="token function">findFake</span><span class="token punctuation">(</span>coinArray<span class="token punctuation">,</span> left<span class="token punctuation">,</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;-----------Error----------&quot;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">/**
+ * 计算固定范围内硬币总质量
+ * 开始
+ */</span>
+<span class="token keyword">function</span> <span class="token function">Weight</span><span class="token punctuation">(</span><span class="token parameter">coinArray<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> weightTemp <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> left<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> right<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        weightTemp <span class="token operator">+=</span> coinArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> weightTemp
+<span class="token punctuation">}</span>
+<span class="token comment">/**
+ * 随机生成伪币位置
+ * 开始
+ */</span>
+<span class="token keyword">function</span> <span class="token function">newFakeCoin</span><span class="token punctuation">(</span><span class="token parameter">coinArray</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> fakeOrder <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token comment">//随机生成伪币位置</span>
+    coinArray<span class="token punctuation">[</span>fakeOrder<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token constant">FAKE_WEIGHT</span><span class="token comment">//为伪币质量赋值</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;随机生成的伪币位置：&quot;</span> <span class="token operator">+</span> <span class="token punctuation">(</span>fakeOrder <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//打印随机伪币位置</span>
+<span class="token punctuation">}</span>
+<span class="token comment">/**
+ * 主函数入口
+ * 开始
+ */</span>
+<span class="token keyword">function</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;------------New-----------&quot;</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token constant">COIN_SIZE</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//为硬币质量数组赋标准值</span>
+        coinArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token constant">COIN_WEIGHT</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">newFakeCoin</span><span class="token punctuation">(</span>coinArray<span class="token punctuation">)</span><span class="token comment">//随机生成伪币位置并打印</span>
+    <span class="token function">findFake</span><span class="token punctuation">(</span>coinArray<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token constant">COIN_SIZE</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token comment">//寻找伪币位置</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;计算得到的伪币位置：&quot;</span> <span class="token operator">+</span> <span class="token punctuation">(</span>findOrder <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//打印返回伪币位置</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;     累计计算次数：&quot;</span> <span class="token operator">+</span> calcTimes<span class="token punctuation">)</span><span class="token comment">//打印计算次数</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;------------End-----------&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>实际测试</p> <div class="language-shell extra-class"><pre class="language-text"><code>[Running] node &quot;伪币问题.js&quot;
+------------New-----------
+随机生成的伪币位置：6
+计算得到的伪币位置：6
+     累计计算次数：4
+------------End-----------
+
+[Done] exited with code=0 in 0.09 seconds
+
+[Running] node &quot;伪币问题.js&quot;
+------------New-----------
+随机生成的伪币位置：8
+计算得到的伪币位置：8
+     累计计算次数：4
+------------End-----------
+
+[Done] exited with code=0 in 0.099 seconds
+
+[Running] node &quot;伪币问题.js&quot;
+------------New-----------
+随机生成的伪币位置：14
+计算得到的伪币位置：14
+     累计计算次数：4
+------------End-----------
+
+[Done] exited with code=0 in 0.091 seconds
+
+[Running] node &quot;伪币问题.js&quot;
+------------New-----------
+随机生成的伪币位置：6
+计算得到的伪币位置：6
+     累计计算次数：4
+------------End-----------
+
+[Done] exited with code=0 in 0.104 seconds
+
+</code></pre></div><h2 id="待完善"><a href="#待完善" class="header-anchor">#</a> 待完善</h2> <ul><li>生成随机位置不完美</li> <li>伪币质量需比真币质量小</li> <li>以及各自不完美</li></ul> <h2 id="ps"><a href="#ps" class="header-anchor">#</a> PS</h2> <p>过几天闲下来 VSCode跑C试试
+还要什么Xcode</p> <p>以上。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/Web/算法/动态规划求矩阵最小路径.html" class="prev">动态规划求矩阵最小路径</a></span> <span class="next"><a href="/Web/算法/EditDistanceProbrlem字符串最少字符操作次数.html">EditDistanceProbrlem字符串最少字符操作次数</a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ec38c9f2.js" defer></script><script src="/assets/js/2.d0fa586e.js" defer></script><script src="/assets/js/44.6671a9a0.js" defer></script>
+  </body>
+</html>
